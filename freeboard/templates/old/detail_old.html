@@ -1,0 +1,29 @@
+{{blog_detail.hit_count__}}
+<a href = "{% url 'home' %}">홈으로 가기</a><br>
+<a href = "{% url 'freeboard' %}">자유게시판으로 돌아가기</a>
+<hr>
+<h1>{{blog_detail.title|safe}}</h1>
+<h3>{{blog_detail.date }} / {{blog_detail.name|safe}}</h3>
+<hr>
+<br>{{blog_detail.body|safe}}<br>
+<br>
+
+<hr>
+<h4>댓글</h4>
+<form method = "POST" action="{% url 'fnew_comment' blog_detail.id %}">
+    {% csrf_token %}
+    {{ comment_form }}
+    <input type = "submit">
+</form>
+
+<hr>
+{% for comment in blog_detail.comment_set.all %}
+<p> {{comment.comment}} / {% if comment.created_string == False %}{{ comment.date|date:'m월 d일' }}
+                            {% else %}
+                            {{ comment.created_string }}
+                            {% endif %} / {{comment.name}} </p>
+<hr>
+{% endfor %}
+
+
+<br><br>

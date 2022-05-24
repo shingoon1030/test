@@ -1,0 +1,25 @@
+{% include 'header.html' %}
+{{blog_detail.hit_count__}}
+
+<body>
+	<div style="padding: 30px;"></div>
+    <section class="page" style="width: 1000px; min-height: 1000px; margin: auto; background-color:aliceblue;">
+		<div style="padding: 10px;"></div>
+		<div class="title">
+		<h1 style = "margin-left: 30px; margin-right: 30px; display:inline;">[{{blog_detail.titleL|safe}}]{{blog_detail.title|safe}}</h1>{{blog_detail.date | date:'Y년 m월 d일'}}
+		</div>
+    <br><br>
+		<div>
+		<div class="article" style="width: 850px; margin: auto;">
+      {{blog_detail.body|safe}}
+    </div>
+    <br><br>
+    
+    {% if blog_detail.name == user.username %}
+    
+    <form  method="GET"> <a href="{% url 'deleteL' blog_detail.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a></form>
+    {% endif %}
+	</div>
+</body>
+
+</html>

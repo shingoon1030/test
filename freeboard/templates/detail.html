@@ -1,0 +1,63 @@
+{% include 'header.html' %}
+{{blog_detail.hit_count__}}
+
+<body>
+	<div style="padding: 30px;"></div>
+    <section class="page" style="width: 1000px; min-height: 1000px; margin: auto; background-color:aliceblue;">
+		<div style="padding: 10px;"></div>
+		<div class="title">
+		<h1 style = "margin-left: 30px; margin-right: 30px; display:inline;">{{blog_detail.title|safe}}</h1>{{blog_detail.date | date:'Y년 m월 d일'}} | {{blog_detail.name|safe}}
+		</div>
+    <br><br>
+		<div>
+		<div class="article" style="width: 850px; margin: auto;">
+      {{blog_detail.body|safe}}
+    </div>
+    <br><br>
+    
+    {% if blog_detail.nameINIT == user.username %}
+    
+    <form  method="GET"> <a href="{% url 'delete' blog_detail.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a></form>
+    {% endif %}
+	</div>
+	<hr style="background:black; width: 1000px; height: 1px;">
+	<div class="table-responsive">
+    <hr>
+        <form method = "POST" action="{% url 'fnew_comment' blog_detail.id %}">
+          {% csrf_token %}
+          {{ comment_form.comment }}
+          <input type = "submit">
+        </form>
+        <table class="table custom-table">
+          
+          <thead>
+            <tr>
+              <th scope="col" width="150">댓글</th>
+              <th scope="col"width="50"><center>작성자</center></th>
+              <th scope="col"width="50"><center>시간</center></th>
+              <th scope="col"width="50"><center></center></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr scope="row">
+            </tr>
+            {% for comment in blog_detail.comment_set.all %}
+            <tr scope="row">
+                      <td>
+                        {{comment.comment}}
+                      </td>
+                      <td><center>{{comment.name}}</center></td>
+                      <td><center>{% if comment.created_string == False %}{{ comment.date|date:'m월 d일' }}
+                          {% else %}
+                          {{ comment.created_string }}
+                          {% endif %}</center></td>
+                      <td>{% if comment.nameINIT == user.username %}<a href="{% url 'commentdelete' blog_detail.id comment.pk %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>{% endif %}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+		</section>
+</body>
+
+</html>

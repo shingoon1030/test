@@ -1,0 +1,90 @@
+{% include 'header.html' %}
+
+<body>
+    <section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">자유 게시판</h2>
+				</div>
+			</div>
+			<div class="new-article">
+				<a href="{% url 'fnew' %}" style="font-weight: 900;">새 글 작성</a>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					
+						<table class="table">
+						  <thead class="thead-dark">
+						    <tr>
+						      <th>게시일</th>
+						      <th>게시글 제목</th>
+						      <th><center>게시자</center></th>
+						      <th><center>댓글수</center></th>
+						      <th><center>조회수</center></th>
+						    </tr>
+						  </thead>
+						  <tbody>
+							  
+							
+						    <tr class="alert" role="alert">
+								
+								{% for post in posts %}
+								<th scope="row">
+								
+								{% if post.created_string == False %}
+								{{ post.date|date:'m월 d일' }}
+								{% else %}
+								{{ post.created_string }}
+								{% endif %}
+								<td><a href = "{% url 'detail' post.id %}">{{ post.title }}</a></td>
+								<td><center>{{ post.name }}</center></td>
+								<td><center>{{ post.comment_set.all|length }}</center></td>
+								<td><center>{{ post.hits }}</center></td>
+								</th>
+								</tr>
+								{% endfor %}
+						    </tr>
+						  </tbody>
+						</table>
+				</div>
+			</div>
+
+			<center><div class="nav-number">
+				
+					{% if posts.has_previous %} <a href="?type={{ type }}&q={{ keyword }}&page={{ posts.previous_page_number }}">이전</a> 
+					{% else %} <a href="?type={{ type }}&q={{ keyword }}" style="background-color:gray">이전</a> 
+					{% endif %}
+					
+					{% for page in posts.paginator.page_range %}
+						
+						{% if page >= posts.number|add:-2 and page <= posts.number|add:2 %}
+						<span style="{% if page == posts.number %}background-color:gray;{% endif %}">
+							<a href="?type={{ type }}&q={{ keyword }}&page={{ page }}">{{ page }}</a>
+						</span>
+						{% elif page >= posts.number|add:-3 and page <= posts.number|add:3 %}
+							..
+						{% endif %}
+					{% endfor %}
+		
+					{% if posts.has_next %} <a href="?type={{ type }}&q={{ keyword }}&page={{ posts.next_page_number }}" >다음</a> 
+					{% else %} <a href="?type={{ type }}&q={{ keyword }}" style="background-color:gray">다음</a> 
+					{% endif %}
+				
+			</div></center>
+			<form class="searchbox" action="{% url 'search' %}" method="GET">
+				{% csrf_token %}
+				<select name="type" value="{{type}}">
+					<option value="title">제목</option>
+					<option value="body">본문</option>
+					<option value="title_body">제목+본문</option>
+					<option value="all">모두</option>
+				</select>
+				<input type="search"  onkeyup="myFunction()" placeholder="게시물 이름을 입력하세요" name="q" value="{{q}}">
+				<button class="ang" type="submit">찾기</button>
+			</form>
+		</div>
+	</section>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset = 'utf-8'>
+        <mata name="viewpoint" content="width=device-width, initial-scale = 1.0">     
+        <title>자유게시판</title>
+        <style type=""text/css">
+            a{ 
+                color: black; font-size: 15px;
+            }
+            .kk{background-color:pink;}
+        </style>
+        
+    </head>
+    <body>
+        <h1>자유게시판</h1>
+        <a href = "{% url 'fnew' %}" >새 글 작성</a><br>
+        <a href = "{% url 'home' %}">홈으로 가기</a>
+        <br><br>
+        {% for post in posts %}
+            <a href = "{% url 'detail' post.id %}">{{ post.title }} / {% if post.created_string == False %}{{ post.date|date:'m월 d일' }}
+                                                                        {% else %}
+                                                                        {{ post.created_string }}
+                                                                        {% endif %} / {{ post.name }}</a><br>
+        {% endfor %}
+
+
+        <hr>
+        <div class="pagination">
+            {% if posts.has_previous %} <a href="?page={{ posts.previous_page_number }}">이전</a> 
+            {% else %} <a href="#">이전</a> 
+            {% endif %}
+            
+            {% for page in posts.paginator.page_range %}
+                
+                {% if page >= posts.number|add:-2 and page <= posts.number|add:2 %}
+                <span class="{% if page == posts.number %}kk{% endif %}">
+                    <a href="?page={{ page }}">{{ page }}</a>
+                </span>
+                {% elif page >= posts.number|add:-3 and page <= posts.number|add:3 %}
+                    ..
+                {% endif %}
+            {% endfor %}
+
+            {% if posts.has_next %} <a href="?page={{ posts.next_page_number }}">다음</a> 
+            {% else %} <a href="#">다음</a> 
+            {% endif %}
+        </div>  
+    </body>
+</html>
+

@@ -1,0 +1,58 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style_header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{% static 'images/icons/icon.ico' %}"/>
+    <style>
+    a:link{color:black;}
+    a:visited{color:black;}
+    a:hover{color: #edad45;}
+    a:active{color: #106197;}
+    </style>
+</head>
+
+{% if user.is_authenticated %}
+    {% if user.time_table == 'notAuth' %}
+    <meta http-equiv="REFRESH" content="0;url={% url 'mustAuth' %}">
+    {% endif %}
+{% else %}
+    <meta http-equiv="REFRESH" content="0;url={% url 'login' %}"> 
+{% endif %}
+
+<body oncontextmenu="return false;" style="min-height: 500px; min-width: 1080px;">
+    <div id="wrap" >
+        <header>
+                <a href = "{% url 'home' %}"><img src="{% static 'images/icons/logo.jpg' %}" class="logo"></a>
+                <div class="menubar">
+                    <li class="snb01"><a href = "{% url 'timetable' %}" style="text-decoration-line: none;">시간표</a></li>
+                    <li class="snb02"><a href = "{% url 'lectureboard' %}" style="text-decoration-line: none;">강의평가</a></li>
+                    <li class="snb03"><a href = "{% url 'freeboard' %}" style="text-decoration-line: none;">자유게시판</a></li>
+                    <li class="snb04"><a href = "{% url 'questionboard' %}" style="text-decoration-line: none;">질문게시판</a></li>
+                </div>
+                    {% if user.is_authenticated%}
+                    <div class="logbar" style="left:80%">
+                        <li style="color:rgb(0,0,0);">{{ user.username }}님 안녕하세요</li>&nbsp;&nbsp;
+                        <a href = "{% url 'logout' %}" style="text-decoration-line: none;"> 로그아웃</a>
+                    </div>
+                    
+                    {% else %}
+                    <div class="logbar">
+                        <a href = "{% url 'login' %}" style="text-decoration-line: none;">로그인</a>
+                        <a href = "{% url 'signup' %}" style="text-decoration-line: none;">회원가입</a>
+                    </div>
+                    {% endif %}
+        </header>
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    font-style: normal;
+    font-family: 'verdana', 'dotum';
+    height: 100%;
+    display: block;
+    font-weight:100;
+}
+
+div {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration-line: none;
+}
+
+#wrap {
+    position: relative;
+    min-width: 1080px;
+    width: 100%;
+    height: 100px;
+    margin: 0;
+    background: url('/static/images/navbar.gif') repeat-x;
+}
+
+.logobox {
+    width: 193.33px;
+    height: 50.67px;
+
+}
+
+.logo {
+    object-fit: cover;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    width: 191px;
+    height: 26px;
+
+}
+
+.menubar {
+    position: absolute;
+    left: 68.5%;
+    top: 17px;
+    display: inline;
+    font-size: 30px;
+    float: left;
+    font-weight:100;
+    font-family: 'Black Han Sans', sans-serif;
+}
+
+.menubar li {
+    float: left;
+    padding-right: 10px;
+}
+
+.menubar li a {
+    overflow:  hidden;
+    line-height: 0;
+}
+
+.logbar {
+    position: absolute;
+    left: 90%;
+    top: 67px;
+    display: inline;
+    font-size: 20px;
+    float: left;
+    font-weight:100;
+    font-family: 'Black Han Sans', sans-serif;
+}
+
+.logbar li {
+    float: left;
+    padding-right: 10px;
+}
+
+.menubar li a {
+    overflow:  hidden;
+    line-height: 0;
+}
+
+
+
+

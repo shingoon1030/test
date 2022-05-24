@@ -1,0 +1,10 @@
+<h1>새 글 작성</h1>
+<form action="" method = "POST">
+    {% csrf_token %}
+    <table>
+        {{ form.title }}
+        {{ form.body }}
+        <img src="{{post_object.image.url}}" /> 
+    </table>
+    <input type = "submit" value = "생성하기">
+</form>

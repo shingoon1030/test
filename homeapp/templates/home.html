@@ -1,0 +1,181 @@
+{% include 'header.html' %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style_home.css' %}">
+<style>
+    a:link{color:black;}
+    a:visited{color:black;}
+    a:hover{color: #edad45;}
+    a:active{color: #106197;}
+</style>
+<body>
+    <section class="img_prv_layout">
+        <div class="img_prv" style="text-align: center;">
+            <h1>오늘의 시간표</h1>
+            <div class="time_table" style="margin-left: 25%">
+                <table summary="수강과목 시간표" style="text-align: center;">
+                    <colgroup>
+                        <col style="width:50px">
+                        <col style="width:auto">
+                        <col style="width:auto">
+                        <col style="width:auto">
+                        <col style="width:auto">
+                        <col style="width:auto">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>교시</th>
+                            <th>월요일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>1교시<br></td>
+                            <td>
+                                고전역학 B401
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>2교시<br></td>
+                            <td>
+                                고전역학 B401
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>3교시<br></td>
+                            <td>
+                                매체 미술 미술실
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>4교시<br></td>
+                            <td>
+                                매체 미술 미술실
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>5교시<br></td>
+                            <td>
+                                통합수학Ⅰ A304
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>6교시<br></td>
+                            <td>
+                                스포츠 생활(남) 3층대강의실
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>7교시<br></td>
+                            <td>
+                                스포츠 생활(남) 3층대강의실
+                            </td>
+                        </tr>
+
+                    </tbody>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="img_prv">
+            <h2 style = "margin-left: 10px; margin-top: 10px;">자유게시판</h2>
+            <div class="miso-post-list">
+                <div class="post-wrap">
+                    <ul class="post-list">
+                        {% for post in posts %}
+                        <li class="post-row">
+                            <a href="{% url 'detail' post.id %}" class="ellipsis"  style = "margin-right: 10px;">
+                                <span class="pull-right gray font-12">
+                                    <span class="count orangered">
+                                        [댓글{{ post.comment_set.all|length }}개]  [조회{{ post.hits }}]  </span>
+                                    &nbsp;
+                                    {% if post.created_string == False %}
+                                    {{ post.date|date:'m월 d일' }}
+                                    {% else %}
+                                    {{ post.created_string }}
+                                    {% endif %}
+                                    </span>
+                                <span class="wr-icon wr-new"></span> {{ post.title }} </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="img_prv">
+            <h2 style = "margin-left: 10px; margin-top: 10px;">질문게시판</h2>
+            <div class="miso-post-list">
+                <div class="post-wrap">
+                    <ul class="post-list">
+                        {% for post in postsQ %}
+                        <li class="post-row">
+                            <a href="{% url 'detailQ' post.id %}" class="ellipsis"  style = "margin-right: 10px;">
+                                <span class="pull-right gray font-12">
+                                    <span class="count orangered">
+                                        [댓글{{ post.comment_set.all|length }}개]  [조회{{ post.hits}}]  </span>
+                                    &nbsp;
+                                    {% if post.created_string == False %}
+                                    {{ post.date|date:'m월 d일' }}
+                                    {% else %}
+                                    {{ post.created_string }}
+                                    {% endif %}
+                                    </span>
+                                <span class="wr-icon wr-new"></span> [{{ post.titleQ }}]{{ post.title }} </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+    </section>
+    <section class="bottom_ad_layer">
+        <div class="ad_wrapper">
+            <div class="ad_container">
+                <ul class="slider">
+                    <li class="item"><img src="{% static 'images/circle/lambda.jpg' %}"></li>
+                    <li class="item"><img src="{% static 'images/circle/lambda.jpg' %}"></li>
+                    <li class="item"><img src="{% static 'images/circle/lambda.jpg' %}"></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <script>
+        var slideWrapper = document.querySelector('.ad_container');
+        var slides = document.querySelectorAll('.item');
+        var totalSlides = slides.length; // item의 갯수
+
+
+        var sliderWidth = slideWrapper.clientWidth; // container의 width
+        var slideIndex = 0;
+        var slider = document.querySelector('.slider');
+
+        slider.style.width = sliderWidth * totalSlides + 'px';
+
+        showSlides()
+
+        function showSlides() {
+            for (var i = 0; i < slides.length; i++) {
+                slider.style.left = -(sliderWidth * slideIndex) + 'px';
+            }
+            slideIndex++;
+            if (slideIndex === totalSlides) {
+                slideIndex = 0;
+            }
+            setTimeout(showSlides, 3000);
+        }
+    </script>
+</body>
+
+</html>

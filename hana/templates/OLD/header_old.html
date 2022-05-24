@@ -1,0 +1,44 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<!--===============================================================================================-->	
+    <link rel="icon" type="image/png" href="{% static 'images/icons/icon.ico' %}"/>
+</head>
+
+{% if user.is_authenticated %}
+    {% if user.time_table == 'notAuth' %}
+    <meta http-equiv="REFRESH" content="0;url={% url 'mustAuth' %}">
+    {% endif %}
+{% else %}
+    <meta http-equiv="REFRESH" content="0;url={% url 'login' %}"> 
+{% endif %}
+<body>
+    <div>
+        <p style="text-align:right;">
+            {% if user.is_authenticated%}
+            {{ user.username }}님 안녕하세요&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href = "{% url 'logout' %}"> 로그아웃</a>
+            <a href = "{% url 'timetable' %}">시간표</a>
+            {% else %}
+            
+            <a href = "{% url 'login' %}">로그인</a>
+            <a href = "{% url 'signup' %}">회원가입</a>
+            {% endif %}
+        </p>
+    </div>
+    <header class="bar">
+        <h1><a href = "{% url 'home' %}"><img src="{% static 'images/icons/logo.jpg' %}" ></a></h1>
+        <header class="menu">
+            <button class="box" onclick="location.href='{% url 'freeboard' %}';">자유게시판</button>
+            <button class="box" onclick="location.href='{% url 'questionboard' %}';">질문게시판</button>
+        </header>
+    </header>
+</body>

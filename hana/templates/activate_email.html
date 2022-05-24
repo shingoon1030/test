@@ -1,0 +1,11 @@
+{% autoescape off %}
+<!DOCTYPE html>
+<body>
+    <div>
+        안녕하세요
+
+        <a href="http://{{ domain }}{% url 'activate' uid64=uid token=token %}">이 글자를 누르면 인증이 끝나요</a>
+    </div>           
+</body>
+</html>
+{% endautoescape %}

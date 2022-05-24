@@ -1,0 +1,12 @@
+{% include 'header.html' %}
+
+<body>
+    <form action="{% url 'timetableupdate' %}" method = "POST">
+	{% csrf_token %}
+        <input type="text" name="timetableField" id="timetableField">
+        <input class="submit-box" type = "submit" value = "제출" style="width:100px">
+    </form>
+    {{ current }}
+</body>
+
+</html>
